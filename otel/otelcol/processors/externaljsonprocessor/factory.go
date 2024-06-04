@@ -31,7 +31,7 @@ func createLogsProcessor(
 	nextConsumer consumer.Logs,
 ) (processor.Logs, error) {
 	metadataSvc := metadataService{
-		cfg:      cfg,
+		cfg:      cfg.(*Config),
 		logger:   set.Logger,
 		metadata: &[]metadataData{},
 	}
@@ -41,12 +41,15 @@ func createLogsProcessor(
 
 	// Fetch metadata every 5 seconds
 	go func() {
+		// Fetch it once before waiting 5 seconds
+		metadataSvc.populateMetadata()
+
 		for {
 			select {
 			case <-done:
 				return
-			case t := <-ticker.C:
-				metadataSvc.populateMetadata(t)
+			case <-ticker.C:
+				metadataSvc.populateMetadata()
 			}
 		}
 	}()

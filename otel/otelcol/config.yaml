@@ -7,6 +7,12 @@ receivers:
 processors:
   batch:
   externaljson:
+    metadata_paths: 
+      - hostname
+      - instance-id
+      - placement/availability-zone
+      - placement/region
+      - public-ipv4
 
 exporters:
   # NOTE: Prior to v0.86.0 use `logging` instead of `debug`.
