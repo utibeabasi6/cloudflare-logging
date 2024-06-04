@@ -1,0 +1,9 @@
+type: externaljson
+scope_name: otelcol/externaljsonprocessor
+
+status:
+  class: processor
+  stability:
+    development: [logs]
+  codeowners:
+    active: [utibeabasi6]
