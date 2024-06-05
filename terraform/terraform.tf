@@ -8,6 +8,8 @@ terraform {
   backend "s3" {
     bucket = "uti-terraform-tf-state"
     key    = "cloudflare-logging/terraform.tfstate"
-    region = "us-east-1"
   }
+}
+
+provider "aws" {
 }
