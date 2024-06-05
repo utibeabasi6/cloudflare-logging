@@ -19,6 +19,9 @@ data "aws_ami" "ubuntu" {
     name   = "block-device-mapping.volume-size"
     values = ["8"]
   }
+
+  owners = ["099720109477"]
+
 }
 
 resource "aws_instance" "kafka" {
@@ -37,4 +40,12 @@ resource "aws_instance" "kafka" {
     http_endpoint          = "enabled"
     instance_metadata_tags = "enabled"
   }
+}
+
+resource "cloudflare_record" "kafka" {
+  count   = var.kafka_instance_count
+  zone_id = var.cloudflare_zone_id
+  name    = "kafka${count.index}"
+  value   = aws_instance.kafka[count.index].public_ip
+  type    = "A"
 }
