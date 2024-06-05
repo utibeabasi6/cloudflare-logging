@@ -10,9 +10,9 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  TF_VAR_cloudflare_zone_id: XXXXXXXXXXXX
-  TF_VAR_cloudflare_api_token: XXXXXXXXXXXX
-  TF_VAR_key_pair: XXXXXXXXXXXXXXXXXX
+  TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+  TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  TF_VAR_key_pair: ${{ secrets.KEY_PAIR }}
 
 jobs:
   plan:
