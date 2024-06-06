@@ -49,3 +49,20 @@ resource "cloudflare_record" "kafka" {
   value   = aws_instance.kafka[count.index].public_ip
   type    = "A"
 }
+
+resource "aws_instance" "app" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.app_instance_type
+  key_name      = var.key_pair
+
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = var.app_instance_block_device_size
+    delete_on_termination = "true"
+  }
+
+  metadata_options {
+    http_endpoint          = "enabled"
+    instance_metadata_tags = "enabled"
+  }
+}

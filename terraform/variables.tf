@@ -30,3 +30,15 @@ variable "cloudflare_api_token" {
     type = string
     description = "Cloudflare API token"
 }
+
+variable "app_instance_type" {
+  type = string
+  description = "Instance type for app instances"
+  default = "t2.micro"
+}
+
+variable "app_instance_block_device_size" {
+  type        = number
+  description = "Size of block device to attatch to app instances"
+  default     = 8
+}
