@@ -27,6 +27,10 @@ func (m *metadataService) populateMetadata() error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
+	if m.cfg.Local {
+		return nil
+	}
+
 	if len(m.cfg.MetadataPaths) == 0 {
 		return nil
 	}
