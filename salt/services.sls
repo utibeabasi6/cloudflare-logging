@@ -1,17 +1,10 @@
-/etc/systemd/system/zookeeper.service:
+{% for service in "zookeeper", "kafka"%}
+/etc/systemd/system/{{service}}.service:
   file.managed:
-    - source: salt://kafka/zookeeper.service
+    - source: salt://kafka/{{service}}.service
 
-/etc/systemd/system/kafka.service:
-  file.managed:
-    - source: salt://kafka/kafka.service
-
-zookeeper:
+{{service}}:
   service.running:
     - enable: True
     - reload: True
-
-kafka:
-  service.running:
-    - enable: True
-    - reload: True
+{% endfor %}
