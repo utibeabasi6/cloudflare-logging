@@ -2,7 +2,7 @@
 Description=kafka
 
 [Service]
-ExecStart=/home/ubuntu/kafka/kafka_2.13-3.7.0/bin/kafka-server-start.sh /home/ubuntu/kafka/kafka_2.13-3.7.0/config/server.properties
+ExecStart=/home/ubuntu/kafka/kafka_2.13-3.7.0/bin/kafka-server-start.sh /home/ubuntu/kafka/server.properties
 
 [Install]
 WantedBy=multi-user.target

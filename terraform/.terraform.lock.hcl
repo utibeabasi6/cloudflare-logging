@@ -2,10 +2,10 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/cloudflare/cloudflare" {
-  version     = "4.34.0"
-  constraints = "~> 4.0"
+  version = "4.34.0"
   hashes = [
     "h1:7vluN2wmw8D9nI11YwTgoGv3hGDXlkt8xqQ4L/JABeQ=",
+    "h1:V+3Qs0Reb6r+8p4XjE5ZFDWYrOIN0x5SwORz4wvHOJ4=",
     "zh:02aa46743c1585ada8faa7db23af68ea614053a506f88f05d1090ff5e0e68076",
     "zh:1e1a545e83e6457a0e15357b23139bc288fb4fbd5e9a5ddfedc95a6a0216b08c",
     "zh:29eef2621e0b1501f620e615bf73b1b90d5417d745e38af63634bc03250faf87",
@@ -28,6 +28,7 @@ provider "registry.terraform.io/hashicorp/aws" {
   version     = "5.52.0"
   constraints = "~> 5.0"
   hashes = [
+    "h1:LEJSEOCO8LPIO6uxJDYrFXdr+Y9hSmTWVcSgG6EdGvw=",
     "h1:Z+mvggOAJJdEwf2p2fxT6WUW0Pch8Ky+LhsZa1TdqFg=",
     "zh:22c4599d47cd59e5519c52afc528fa2aec43b4434f369870ee2806daa071449d",
     "zh:3c2edc482662a654f84db4cd3f2cdd8f200147207d053d2e95082744b7814e6d",
