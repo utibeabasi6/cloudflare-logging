@@ -37,7 +37,8 @@ resource "aws_instance" "app" {
     instance_metadata_tags = "enabled"
   }
 
-  user_data = file("./scripts/install_salt.sh")
+  user_data = file("./scripts/install_salt_minion.sh")
+  vpc_security_group_ids = [ aws_security_group.salt.id ]
 
   tags = {
     Name = "app-${var.app_region}"
@@ -60,7 +61,8 @@ resource "aws_instance" "salt_master" {
     instance_metadata_tags = "enabled"
   }
 
-  user_data = file("./scripts/install_salt.sh")
+  user_data = file("./scripts/install_salt_master.sh")
+  vpc_security_group_ids = [ aws_security_group.salt.id ]
 
   tags = {
     Name = "salt_master"
@@ -101,4 +103,30 @@ resource "cloudflare_record" "salt_master" {
   name     = "salt-master"
   value    = aws_instance.salt_master.public_ip
   type     = "A"
+}
+
+resource "aws_security_group" "salt" {
+  ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+    ingress {
+    from_port        = 4505
+    to_port          = 4506
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 }
