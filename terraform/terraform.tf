@@ -19,12 +19,12 @@ terraform {
 # default provider
 provider "aws" {}
 provider "aws" {
-  alias = "app"
+  alias  = "app"
   region = var.app_region
 }
 
 provider "aws" {
-  alias = "kafka"
+  alias  = "kafka"
   region = var.kafka_region
 }
 

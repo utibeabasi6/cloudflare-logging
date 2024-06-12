@@ -29,5 +29,5 @@ jobs:
                 host: ${{ secrets.SALT_MASTER_HOSTNAME }}
                 username: ${{ secrets.SALT_MASTER_USERNAME }}
                 key: ${{ secrets.SSH_PRIV_KEY }}
-                script: sudo salt -i '*' test.ping
+                script: sudo salt '*' test.ping
         

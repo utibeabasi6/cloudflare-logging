@@ -21,7 +21,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "app" {
-  provider = aws.app
+  provider      = aws.app
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.app_instance_type
   key_name      = var.key_pair
@@ -37,8 +37,8 @@ resource "aws_instance" "app" {
     instance_metadata_tags = "enabled"
   }
 
-  user_data = file("./scripts/install_salt_minion.sh")
-  vpc_security_group_ids = [ aws_security_group.app.id ]
+  user_data              = file("./scripts/install_salt_app_minion.sh")
+  vpc_security_group_ids = [aws_security_group.default.id, aws_security_group.app.id]
 
   tags = {
     Name = "app-${var.app_region}"
@@ -61,8 +61,8 @@ resource "aws_instance" "salt_master" {
     instance_metadata_tags = "enabled"
   }
 
-  user_data = file("./scripts/install_salt_master.sh")
-  vpc_security_group_ids = [ aws_security_group.salt.id ]
+  user_data              = file("./scripts/install_salt_master.sh")
+  vpc_security_group_ids = [aws_security_group.default.id, aws_security_group.salt_master.id]
 
   tags = {
     Name = "salt_master"
@@ -70,7 +70,7 @@ resource "aws_instance" "salt_master" {
 }
 
 resource "aws_instance" "kafka" {
-  provider = aws.kafka
+  provider      = aws.kafka
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.kafka_instance_type
   key_name      = var.key_pair
@@ -86,37 +86,43 @@ resource "aws_instance" "kafka" {
     instance_metadata_tags = "enabled"
   }
 
+  user_data              = file("./scripts/install_salt_kafka_minion.sh")
+  vpc_security_group_ids = [aws_security_group.default.id, aws_security_group.kafka.id]
+
   tags = {
     Name = "kafka-${var.kafka_region}"
   }
 }
 
 resource "cloudflare_record" "kafka" {
-  zone_id  = var.cloudflare_zone_id
-  name     = "kafka-${var.kafka_region}"
-  value    = aws_instance.kafka.public_ip
-  type     = "A"
+  zone_id = var.cloudflare_zone_id
+  name    = "kafka-${var.kafka_region}"
+  value   = aws_instance.kafka.public_ip
+  type    = "A"
 }
 
 resource "cloudflare_record" "salt_master" {
-  zone_id  = var.cloudflare_zone_id
-  name     = "salt-master"
-  value    = aws_instance.salt_master.public_ip
-  type     = "A"
+  zone_id = var.cloudflare_zone_id
+  name    = "salt-master"
+  value   = aws_instance.salt_master.public_ip
+  type    = "A"
 }
 
-resource "aws_security_group" "salt" {
+# Security groups
+resource "aws_security_group" "salt_master" {
   ingress {
-    from_port        = 22
-    to_port          = 22
+    from_port        = 4505
+    to_port          = 4506
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+}
 
-    ingress {
-    from_port        = 4505
-    to_port          = 4506
+resource "aws_security_group" "default" {
+  ingress {
+    from_port        = 22
+    to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
@@ -133,25 +139,19 @@ resource "aws_security_group" "salt" {
 
 resource "aws_security_group" "app" {
   ingress {
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-    ingress {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+}
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
+resource "aws_security_group" "kafka" {
+  ingress {
+    from_port        = 9092
+    to_port          = 9092
+    protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
