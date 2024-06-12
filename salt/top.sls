@@ -1,3 +1,5 @@
 base:          
   'app-*':      
-    - app.nginx
+    - app.install
+  'kafka-*':
+    - kafka.install

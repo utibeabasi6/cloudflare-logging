@@ -16,5 +16,5 @@ jobs:
                 username: ${{ secrets.SALT_MASTER_USERNAME }}
                 key: ${{ secrets.SSH_PRIV_KEY }}
                 source: "salt/**/*"
-                target: "/srv/salt"
+                target: "/srv"
                 rm: true
