@@ -2,6 +2,8 @@
 Description=kafka
 
 [Service]
+User=root
+Group=root
 ExecStart=/home/ubuntu/kafka/kafka_2.13-3.7.0/bin/kafka-server-start.sh /home/ubuntu/kafka/server.properties
 
 [Install]

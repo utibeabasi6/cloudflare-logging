@@ -1,7 +1,7 @@
 variable "kafka_instance_type" {
   type        = string
   description = "Instance type for kafka instances"
-  default     = "t2.micro"
+  default     = "t3.large"
 }
 
 variable "key_pair" {
