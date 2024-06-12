@@ -6,6 +6,7 @@ plan:
 
 update_salt:
 	@sudo cp -r salt/* /etc/salt/srv/salt
-	@sudo salt-ssh '*' state.apply install --sudo
-	@sudo salt-ssh '*' state.apply kafka
-	@sudo salt-ssh '*' state.apply services --sudo
+	# @sudo salt-ssh '*' state.apply kafka.install --sudo
+	# @sudo salt-ssh '*' state.apply kafka.kafka
+	# @sudo salt-ssh '*' state.apply kafka.services --sudo
+	@sudo salt-ssh '*' state.apply -l debug --sudo
