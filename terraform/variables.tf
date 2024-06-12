@@ -38,21 +38,21 @@ variable "app_instance_block_device_size" {
 }
 
 variable "aws_account_id" {
-    type = string
-    description = "AWS account id"
-    default = "099720109477"
+  type        = string
+  description = "AWS account id"
+  default     = "099720109477"
 }
 
 variable "kafka_region" {
-  type = string
+  type        = string
   description = "Region to deploy kafka instance into"
-  default = "us-east-1"
+  default     = "us-east-1"
 }
 
 variable "app_region" {
-  type = string
+  type        = string
   description = "Region to deploy app instance into"
-  default = "us-east-1"
+  default     = "us-east-1"
 }
 
 variable "salt_master_instance_type" {
