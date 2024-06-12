@@ -14,43 +14,60 @@ on:
             - kafka
 
 jobs:
-    accept-keys:
-      name: Accept minion keys
-      runs-on: ubuntu-latest
-      steps:
-          - name: Accept minion keys
-            uses: appleboy/ssh-action@v1.0.3
-            with:
-              host: ${{ secrets.SALT_MASTER_HOSTNAME }}
-              username: ${{ secrets.SALT_MASTER_USERNAME }}
-              key: ${{ secrets.SSH_PRIV_KEY }}
-              script: sudo salt-key -A -y
+  deploy-state-files:
+    name: Deploy State Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Copy salt states to master
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+          username: ${{ secrets.SALT_MASTER_USERNAME }}
+          key: ${{ secrets.SSH_PRIV_KEY }}
+          source: "salt/"
+          target: "/srv/salt"
+          rm: true
+          strip_components: 1
+          
+  accept-keys:
+    name: Accept minion keys
+    runs-on: ubuntu-latest
+    steps:
+        - name: Accept minion keys
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+            username: ${{ secrets.SALT_MASTER_USERNAME }}
+            key: ${{ secrets.SSH_PRIV_KEY }}
+            script: sudo salt-key -A -y
+  
+  config-kafka:
+    name: Configure kafka instances
+    runs-on: ubuntu-latest
+    needs: accept-keys
+    if: inputs.filter == 'all' || inputs.filter == 'kafka'
+    steps:
+        - name: Configure kafka instances
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+            username: ${{ secrets.SALT_MASTER_USERNAME }}
+            key: ${{ secrets.SSH_PRIV_KEY }}
+            script: sudo salt 'kafka-*' state.apply
+                
+  config-app:
+    name: Configure app instances
+    runs-on: ubuntu-latest
+    needs: accept-keys
+    if: inputs.filter == 'all' || inputs.filter == 'app'
+    steps:
+        - name: Configure app instances
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+            username: ${{ secrets.SALT_MASTER_USERNAME }}
+            key: ${{ secrets.SSH_PRIV_KEY }}
+            script: sudo salt 'app-*' state.apply 
     
-    config-kafka:
-      name: Configure kafka instances
-      runs-on: ubuntu-latest
-      needs: accept-keys
-      if: inputs.filter == 'all' || inputs.filter == 'kafka'
-      steps:
-          - name: Configure kafka instances
-            uses: appleboy/ssh-action@v1.0.3
-            with:
-              host: ${{ secrets.SALT_MASTER_HOSTNAME }}
-              username: ${{ secrets.SALT_MASTER_USERNAME }}
-              key: ${{ secrets.SSH_PRIV_KEY }}
-              script: sudo salt 'kafka-*' state.apply
-                  
-    config-app:
-      name: Configure app instances
-      runs-on: ubuntu-latest
-      needs: accept-keys
-      if: inputs.filter == 'all' || inputs.filter == 'app'
-      steps:
-          - name: Configure app instances
-            uses: appleboy/ssh-action@v1.0.3
-            with:
-              host: ${{ secrets.SALT_MASTER_HOSTNAME }}
-              username: ${{ secrets.SALT_MASTER_USERNAME }}
-              key: ${{ secrets.SSH_PRIV_KEY }}
-              script: sudo salt 'app-*' state.apply 
-      
