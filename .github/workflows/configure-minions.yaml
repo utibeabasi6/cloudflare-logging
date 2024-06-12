@@ -30,10 +30,11 @@ jobs:
           target: "/srv/salt"
           rm: true
           strip_components: 1
-          
+
   accept-keys:
     name: Accept minion keys
     runs-on: ubuntu-latest
+    needs: deploy-state-files
     steps:
         - name: Accept minion keys
           uses: appleboy/ssh-action@v1.0.3
