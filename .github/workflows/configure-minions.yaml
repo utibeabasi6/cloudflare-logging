@@ -15,34 +15,37 @@ on:
 
 jobs:
     accept-keys:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: Accept minion keys
-              uses: appleboy/ssh-action@v1.0.3
-              with:
-                host: ${{ secrets.SALT_MASTER_HOSTNAME }}
-                username: ${{ secrets.SALT_MASTER_USERNAME }}
-                key: ${{ secrets.SSH_PRIV_KEY }}
-                script: sudo salt-key -A
+      name: Accept minion keys
+      runs-on: ubuntu-latest
+      steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+          - name: Accept minion keys
+            uses: appleboy/ssh-action@v1.0.3
+            with:
+              host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+              username: ${{ secrets.SALT_MASTER_USERNAME }}
+              key: ${{ secrets.SSH_PRIV_KEY }}
+              script: sudo salt-key -A -y
     
     config-kafka:
-        runs-on: ubuntu-latest
-        needs: accept-keys
-        if: inputs.filter == 'all' || inputs.filter == 'kafka'
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: Configure kafka instances
-              uses: appleboy/ssh-action@v1.0.3
-              with:
-                host: ${{ secrets.SALT_MASTER_HOSTNAME }}
-                username: ${{ secrets.SALT_MASTER_USERNAME }}
-                key: ${{ secrets.SSH_PRIV_KEY }}
-                script: sudo salt 'kafka-*' test.ping
+      name: COnfigure kafka instances
+      runs-on: ubuntu-latest
+      needs: accept-keys
+      if: inputs.filter == 'all' || inputs.filter == 'kafka'
+      steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+          - name: Configure kafka instances
+            uses: appleboy/ssh-action@v1.0.3
+            with:
+              host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+              username: ${{ secrets.SALT_MASTER_USERNAME }}
+              key: ${{ secrets.SSH_PRIV_KEY }}
+              script: sudo salt 'kafka-*' test.ping
     
     config-app:
+      name: Configure app instances
       runs-on: ubuntu-latest
       needs: accept-keys
       if: inputs.filter == 'all' || inputs.filter == 'app'
