@@ -17,4 +17,4 @@ jobs:
                 key: ${{ secrets.SSH_PRIV_KEY }}
                 source: "salt/**/*"
                 target: "/srv/salt"
-                overwrite: true
+                rm: true
