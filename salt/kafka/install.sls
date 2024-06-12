@@ -10,7 +10,7 @@ extract_kafka:
   archive.extracted:
     - name: /home/ubuntu/kafka
     - source: /home/ubuntu/kafka.tgz
-    
+
 {% set public_ip = salt["cmd.run"]("curl -s icanhazip.com ") %}
 
 /home/ubuntu/kafka/server.properties:
@@ -30,5 +30,7 @@ extract_kafka:
 {{service}}:
   service.running:
     - enable: True
-    - reload: True
+    - watch:
+      - file: /etc/systemd/system/{{service}}.service
+      - file: /home/ubuntu/kafka/server.properties
 {% endfor %}
