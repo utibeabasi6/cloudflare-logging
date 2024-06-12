@@ -1,0 +1,32 @@
+name: Configure minions
+
+on:
+    workflow_dispatch: 
+
+jobs:
+    accept-keys:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Accept minion keys
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+                username: ${{ secrets.SALT_MASTER_USERNAME }}
+                key: ${{ secrets.SSH_PRIV_KEY }}
+                script: sudo salt-key
+    
+    deploy-states:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Deploy states
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SALT_MASTER_HOSTNAME }}
+                username: ${{ secrets.SALT_MASTER_USERNAME }}
+                key: ${{ secrets.SSH_PRIV_KEY }}
+                script: sudo salt -i '*' test.ping
+        
