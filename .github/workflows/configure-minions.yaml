@@ -38,8 +38,11 @@ jobs:
               host: ${{ secrets.SALT_MASTER_HOSTNAME }}
               username: ${{ secrets.SALT_MASTER_USERNAME }}
               key: ${{ secrets.SSH_PRIV_KEY }}
-              script: sudo salt 'kafka-*' test.ping
-    
+              script: |
+                sudo salt 'kafka-*' state.apply kafka.install --sudo
+                sudo salt 'kafka-*' state.apply kafka.kafka
+                sudo salt 'kafka-*' state.apply kafka.services --sudo
+                  
     config-app:
       name: Configure app instances
       runs-on: ubuntu-latest
@@ -52,5 +55,5 @@ jobs:
               host: ${{ secrets.SALT_MASTER_HOSTNAME }}
               username: ${{ secrets.SALT_MASTER_USERNAME }}
               key: ${{ secrets.SSH_PRIV_KEY }}
-              script: sudo salt 'app-*' test.ping
+              script: sudo salt 'app-*' state.apply --sudo
       
