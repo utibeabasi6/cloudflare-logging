@@ -7,3 +7,7 @@ plan:
 update_salt:
 	@sudo cp -r salt/* /etc/salt/srv/salt
 	@sudo salt-ssh '*' state.apply --sudo
+
+collector:
+	@cd otel && ocb --config builder-config.yaml
+	@cd otel/otelcol && ./otelcol --config config.yaml

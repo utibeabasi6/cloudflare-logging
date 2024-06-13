@@ -1,4 +1,4 @@
-name: Configure minions
+name: Configure Minions
 
 on:
     workflow_dispatch: 

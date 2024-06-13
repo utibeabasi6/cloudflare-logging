@@ -1,0 +1,30 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+  externaljson:
+    local: true
+    metadata_paths: 
+      - hostname
+      - instance-id
+      - placement/availability-zone
+      - placement/region
+      - public-ipv4
+
+exporters:
+  kafka:
+    brokers:
+      - kafka-us-east-1.utibeumanah.dev
+    protocol_version: 2.0.0
+
+service:
+  pipelines:
+    logs:
+      processors: [externaljson]
+      receivers: [otlp]
+      exporters: [kafka]
+  

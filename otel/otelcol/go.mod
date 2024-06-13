@@ -2,12 +2,11 @@
 
 module go.opentelemetry.io/collector/cmd/builder
 
-go 1.21.0
-
-toolchain go1.21.1
+go 1.21.1
 
 require (
 	github.com/open-telemetry/opentelemetry-collector-contrib/exporter/kafkaexporter v0.100.0
+	github.com/utibeabasi6/cloudflare-logging/otel/otelcol/processors/externaljsonprocessor v0.0.0
 	go.opentelemetry.io/collector/component v0.101.0
 	go.opentelemetry.io/collector/confmap v0.101.0
 	go.opentelemetry.io/collector/confmap/converter/expandconverter v0.101.0
@@ -149,3 +148,5 @@ require (
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/utibeabasi6/cloudflare-logging/otel/otelcol/processors/externaljsonprocessor => ./processors/externaljsonprocessor

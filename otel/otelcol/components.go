@@ -13,8 +13,8 @@ import (
 	otlpexporter "go.opentelemetry.io/collector/exporter/otlpexporter"
 	kafkaexporter "github.com/open-telemetry/opentelemetry-collector-contrib/exporter/kafkaexporter"
 	batchprocessor "go.opentelemetry.io/collector/processor/batchprocessor"
-	otlpreceiver "go.opentelemetry.io/collector/receiver/otlpreceiver"
 	externaljsonprocessor "github.com/utibeabasi6/cloudflare-logging/otel/otelcol/processors/externaljsonprocessor"
+	otlpreceiver "go.opentelemetry.io/collector/receiver/otlpreceiver"
 )
 
 func components() (otelcol.Factories, error) {
