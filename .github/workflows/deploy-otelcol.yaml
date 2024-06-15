@@ -1,4 +1,4 @@
-name: Deploy otelcol binary
+name: Deploy Otelcol Binary
 
 on:
   push: 
