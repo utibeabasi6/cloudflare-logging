@@ -1,0 +1,10 @@
+[Unit]
+Description=otelcol
+
+[Service]
+User=root
+Group=root
+ExecStart=/home/ubuntu/otelcol/otelcol --config /home/ubuntu/otelcol/config.yaml
+
+[Install]
+WantedBy=multi-user.target

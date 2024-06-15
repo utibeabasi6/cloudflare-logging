@@ -1,8 +1,7 @@
 receivers:
-  otlp:
-    protocols:
-      http:
-        endpoint: 0.0.0.0:4318
+  receivers:
+    filelog:
+      include: [ /var/log/nginx/*.log ]
 
 processors:
   batch:
