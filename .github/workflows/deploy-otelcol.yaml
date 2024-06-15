@@ -1,0 +1,29 @@
+name: Deploy otelcol binary
+
+on:
+    push:
+      branches: master
+    workflow_dispatch: 
+
+jobs:
+  deploy-otelcol-binary:
+    name: Deploy Otelcol Binary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install OCB
+        run: |
+          curl --proto '=https' --tlsv1.2 -fL -o ocb \
+          https://github.com/open-telemetry/opentelemetry-collector/releases/download/cmd%2Fbuilder%2Fv0.102.1/ocb_0.102.1_linux_amd64
+          chmod +x ocb
+          mv ocb /usr/local/bin
+      - name: Generate otelcol binary
+        run: | 
+          cd otel && ocb --config builder-config.yaml
+          zip -j otelcol.zip otel/otelcol/otelcol
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: otelcol.zip

@@ -2,3 +2,4 @@
 .DS_Store
 .terraform
 .tfvars
+otelcol.zip

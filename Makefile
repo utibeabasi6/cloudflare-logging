@@ -1,6 +1,9 @@
 up:
 	@cd terraform && terraform apply -var-file=./.tfvars
 
+down:
+	@cd terraform && terraform destroy -var-file=./.tfvars
+
 plan:
 	@cd terraform && terraform plan -var-file=./.tfvars
 
