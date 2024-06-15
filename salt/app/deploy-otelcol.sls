@@ -9,6 +9,7 @@ extract_otelcol:
     - name: /home/ubuntu/otelcol
     - source: /home/ubuntu/otelcol.zip
     - failhard: True
+    - enforce_toplevel: False
 
 /home/ubuntu/otelcol/config.yaml:
   file.managed:
