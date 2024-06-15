@@ -1,7 +1,7 @@
 /home/ubuntu/otelcol.zip:
   file.managed:
-    - source: https://velocity-store-utibeabasi6.s3.amazonaws.com/otelcol.zip # temporary url
-    - source_hash: 32d316ea9c3e23fe91f06ef344bc7489
+    - source: https://github.com/utibeabasi6/cloudflare-logging/releases/download/v0.0.5/otelcol.zip
+    - source_hash: B813CDE3D2AF814217EC164A09E2FF41
     - failhard: True
 
 extract_otelcol:

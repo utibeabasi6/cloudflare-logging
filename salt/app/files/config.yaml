@@ -1,7 +1,6 @@
 receivers:
-  receivers:
-    filelog:
-      include: [ /var/log/nginx/*.log ]
+  filelog:
+    include: [ /var/log/nginx/*.log ]
 
 processors:
   batch:
@@ -24,6 +23,6 @@ service:
   pipelines:
     logs:
       processors: [externaljson]
-      receivers: [otlp]
+      receivers: [filelog]
       exporters: [kafka]
   

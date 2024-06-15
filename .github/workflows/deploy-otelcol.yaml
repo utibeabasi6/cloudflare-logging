@@ -8,7 +8,7 @@ on:
 jobs:
   deploy-otelcol-binary:
     name: Deploy Otelcol Binary
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04 # TODO: Might be better to update the app instance linux version than building on an older one
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout
