@@ -16,7 +16,7 @@ processors:
 exporters:
   kafka:
     brokers:
-      - kafka-us-east-1.utibeumanah.dev
+      - kafka-us-east-1.utibeumanah.dev:9092
     protocol_version: 2.0.0
 
 service:
