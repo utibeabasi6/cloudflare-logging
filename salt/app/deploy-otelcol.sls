@@ -1,7 +1,7 @@
 /home/ubuntu/otelcol.zip:
   file.managed:
-    - source: https://github.com/utibeabasi6/cloudflare-logging/releases/download/v0.0.5/otelcol.zip
-    - source_hash: B813CDE3D2AF814217EC164A09E2FF41
+    - source: https://github.com/utibeabasi6/cloudflare-logging/releases/download/v0.0.6/otelcol.zip
+    - source_hash: FCDF24F7F79CBBCFF76DA362B7326BDF
     - failhard: True
 
 extract_otelcol:
