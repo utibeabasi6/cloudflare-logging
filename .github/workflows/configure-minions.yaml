@@ -14,8 +14,8 @@ on:
             - kafka
 
 jobs:
-  deploy-state-files:
-    name: Deploy State Files
+  copy-state-files:
+    name: Copy State Files to master
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,7 +34,7 @@ jobs:
   accept-keys:
     name: Accept minion keys
     runs-on: ubuntu-latest
-    needs: deploy-state-files
+    needs: copy-state-files
     steps:
         - name: Accept minion keys
           uses: appleboy/ssh-action@v1.0.3

@@ -8,14 +8,17 @@ extract_otelcol:
   archive.extracted:
     - name: /home/ubuntu/otelcol
     - source: /home/ubuntu/otelcol.zip
+    - failhard: True
 
-/home/ubuntu/otelcol:
+/home/ubuntu/otelcol/config.yaml:
   file.managed:
     - source: salt://app/files/config.yaml
+    - failhard: True
 
 /etc/systemd/system/otelcol.service:
   file.managed:
     - source: salt://app/files/otelcol.service
+    - failhard: True
 
 otelcol:
   service.running:
