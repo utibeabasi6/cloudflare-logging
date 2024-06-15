@@ -2,6 +2,7 @@
   file.managed:
     - source: https://velocity-store-utibeabasi6.s3.amazonaws.com/otelcol.zip # temporary url
     - source_hash: 32d316ea9c3e23fe91f06ef344bc7489
+    - failhard: True
 
 extract_otelcol:
   archive.extracted:
