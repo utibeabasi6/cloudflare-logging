@@ -10,7 +10,7 @@ exporters:
   - gomod:
       go.opentelemetry.io/collector/exporter/otlpexporter v0.101.0
   - gomod:
-      github.com/open-telemetry/opentelemetry-collector-contrib/exporter/kafkaexporter v0.100.0
+      github.com/open-telemetry/opentelemetry-collector-contrib/exporter/kafkaexporter v0.102.0
 
 processors:
   - gomod:
