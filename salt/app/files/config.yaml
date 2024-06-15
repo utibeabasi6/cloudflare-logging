@@ -5,7 +5,6 @@ receivers:
 processors:
   batch:
   externaljson:
-    local: true
     metadata_paths: 
       - hostname
       - instance-id
