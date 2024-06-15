@@ -21,8 +21,9 @@ jobs:
           mv ocb /usr/local/bin
       - name: Generate otelcol binary
         run: | 
-          cd otel && ocb --config builder-config.yaml
-          zip -j otelcol.zip otel/otelcol/otelcol
+          cd otel
+          ocb --config builder-config.yaml
+          zip -j otelcol.zip otelcol/otelcol
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
