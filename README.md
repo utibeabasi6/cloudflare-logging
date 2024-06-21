@@ -23,3 +23,4 @@ Log pipeline based on the architecture used at Cloudflare
 - [ ] Test multi-region deployment. Multi region support is built in but i havent tested it yet
 - [ ] Add all app instances in all regions to global accelerator for anycast routing
 - [ ] Add Vector sinks
+- [ ] Use kafka mirror maker to replicate kafka data between clusters
