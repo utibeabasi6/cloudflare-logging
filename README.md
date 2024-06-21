@@ -1,5 +1,9 @@
 # Cloudflare Logging
 
+![Terraform Plan](https://github.com/utibeabasi6/cloudflare-logging/actions/workflows/plan.yaml/badge.svg)
+![Deploy Otelcol](https://github.com/utibeabasi6/cloudflare-logging/actions/workflows/deploy-otelcol.yaml/badge.svg)
+![Configure Minions](https://github.com/utibeabasi6/cloudflare-logging/actions/workflows/configure-minions.yaml/badge.svg)
+
 Log pipeline based on the architecture used at Cloudflare
 
 # Components
